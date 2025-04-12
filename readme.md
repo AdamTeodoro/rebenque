@@ -64,20 +64,20 @@
 
 <br />
 
-<b>Command to encrypt your code to SRC_ENCRYPTED:</b>
+<b>Command to encrypt your code to folder SRC_ENCRYPTED:</b>
 
 ```
     gulp encrypt
 ```
 
-<b>Command to decrypt your code to SRC_DECRYPTED:</b>
+<b>Command to decrypt your code to folder SRC_DECRYPTED:</b>
 
 ```
     gulp decrypt
 ```
 
 <h3>Step 9<h3>
-<h4>Copy your dependency list (Ex: JS package.json, python requirements.txt ... ) from the SRC_ENCRYPTED</h4>
+<h4>Copy your dependency list (Ex: JS package.json, python requirements.txt ... ) to the SRC_ENCRYPTED</h4>
 
 <h3>Step 10</h3>
 <h4>Now its only generate encrypted code before make your commits in your SRC_ENCRYPTED folder</h4>
