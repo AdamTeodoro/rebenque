@@ -62,6 +62,8 @@
 <h3>Step 8</h3>
 <h4>Understanding commands</h4>
 
+<b>The commands works only in rebenque folder<b>
+
 <br />
 
 <b>Command to encrypt your code to folder SRC_ENCRYPTED:</b>
