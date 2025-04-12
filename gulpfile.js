@@ -10,7 +10,7 @@ const { Buffer } = require('safe-buffer');
 
 //environment
 const SECRETKEY = 'your secret pass';
-const SRCFOLDER = 'src';
+const SRCFOLDER = '../src';
 const ENCRYPTEDFOLDER = 'SRC_ENCRYPTED';
 const SRCDECRYPTED = 'SRC_DECRYPTED';
 
