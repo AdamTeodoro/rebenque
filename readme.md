@@ -40,7 +40,7 @@
 
 <h3>Step 5</h3>
 <h4>
-    Add in gulpfile.js your secret key in variable '<b>SECRETKEY<b>'
+    Add in gulpfile.js your secret key in variable '<b>SECRETKEY</b>'
 </h4>
 
 ```
