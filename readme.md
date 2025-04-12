@@ -8,33 +8,33 @@
 <h2>START<h2>
 <h3>Step 1</h3>
 <h4>Clone this project in your root project</h4>
-```diff
+```
     git clone https://github.com/AdamTeodoro/rebenque.git
 ```
 <h3>Step 2</h3>
 <h4>Configure in gulpfile.js the path from the folder with code to encrypt, by default it's: </h4>
-```diff
+```
     const SRCFOLDER = '../src'
 ```
 <h3>Step 3</h3>
 <h4>
     Configure in gulpfile.js the path dest to encrypted code files, by default it's:  
 </h4>
-```diff
+```
     const ENCRYPTEDFOLDER = 'SRC_ENCRYPTED'
 ```
 <h3>Step 4</h3>
 <h4>
     Configure in gulpfile.js the path dest to decrypted code files, by default it's:  
 </h4>
-```diff
+```
     const DECRYPTEDFOLDER = 'SRC_DECRYPTED'
 ```
 <h3>Step 5</h3>
 <h4>
     Add in gulpfile.js your secret key in variable '<b>SECRETKEY<b>'
 </h4>
-```diff
+```
     const SECRETKEY = 'your secret pass'
 ```
 <h3>Step 6</h3>
@@ -43,7 +43,6 @@
 <h3>Step 7<h3>
 <h4>You need install dependencies to work, in rebenque folder:<h4>
 ```
-diff
     npm install 
 ```
 <h4><b>IMPORTANT: make sure 'gulp' is installed</b></h4>
@@ -54,14 +53,12 @@ diff
 <br />
 <b>Command to encrypt your code to SRC_ENCRYPTED:</b>
 ```
-diff
     gulp encrypt
 ```
 <br />
 
 <b>Command to decrypt your code to SRC_DECRYPTED:</b>
 ```
-diff
     gulp decrypt
 ```
 <h3>Step 9<h3>
