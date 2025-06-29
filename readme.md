@@ -111,7 +111,7 @@
 <h1>DICA</h1>
 <h2>Crie um repositório apenas LOCALMENTE na raíz do projeto, para continuar usando as funcionalidades da IDE relacionadas ao git, funcionalidades como:</h2>
 
-<h3>1 - verificar mudanças em arquivos</h3>
-<h3>2 - desfazer mudanças de arquivos</h3>
-<h3>3 - controle de versão local</h3>
+<h4>1 - verificar mudanças em arquivos</h4>
+<h4>2 - desfazer mudanças de arquivos</h4>
+<h4>3 - controle de versão local</h4>
 
