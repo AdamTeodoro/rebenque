@@ -109,7 +109,7 @@
 <h4>Você pode fazer commits para o repositório remoto na pasta 'ENCRYPTED_FOLDER', enviando para o git um código versionado e encriptado</h4>
 
 <h1>DICA</h1>
-<h2>Crie um repositório apenas LOCALMENTE na raíz do projeto, para continuar usando as funcionalidades da IDE relacionadas ao git, funcionalidades como:</h2>
+<h2>Crie um repositório apenas LOCALMENTE na raiz do projeto, para continuar usando as funcionalidades da IDE relacionadas ao git, funcionalidades como:</h2>
 
 <h4>1 - verificar mudanças em arquivos</h4>
 <h4>2 - desfazer mudanças de arquivos</h4>
