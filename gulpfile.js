@@ -27,9 +27,9 @@ const ENVIRONMENT = {
     //caminho da raiz do projeto
     PROJECT_FOLDER_ROOT: './test_project',
     //caminho da pasta encriptada
-    ENCRYPTED_FOLDER: '/encrypted',
+    ENCRYPTED_FOLDER: 'encrypted',
     //caminho da pasta desencriptada
-    DECRYPTED_FOLDER: '/decrypted',
+    DECRYPTED_FOLDER: 'decrypted',
     /**
      * caminho para os arquivos que devem ser ignorados, esse caminho começa
      * na raiz do projeto
@@ -49,7 +49,7 @@ const ENVIRONMENT = {
      */
     FILE_NAMES_TO_IGNORE: [
         'package-lock.json',
-        'node_modules/**',
+        'node_modules/**/*.*',
     ]
 };
 
@@ -74,8 +74,10 @@ function decryptContent() {
 
 function encryptFiles() {
     green('Iniciando encriptação . . .');
+    //obtendo o caminho raíz e somando
+    // invertendo a barra de \ para /, duas barras '\\' para representar apenas uma barra '\'
     const fullPathsToIgnore = ENVIRONMENT.FILE_NAMES_TO_IGNORE
-        .map((fileName) => path.join(ENVIRONMENT.PROJECT_FOLDER_ROOT, fileName));
+        .map((pathToFile) => path.join(ENVIRONMENT.PROJECT_FOLDER_ROOT, pathToFile).replaceAll("\\", "/"))
     //encriptando os arquivos da lista
     return gulp.src(`${ENVIRONMENT.PROJECT_FOLDER_ROOT}/**/*.*`, { ignore: fullPathsToIgnore })
         .pipe(through2.obj((file, enc, callback) => {
@@ -91,11 +93,7 @@ function encryptFiles() {
             }
             callback(null, file);
         }))
-        .pipe(gulp.dest(ENVIRONMENT.ENCRYPTED_FOLDER))
-        .end(() => {
-            yellow('Encriptado com sucesso!');
-            yellow('Encriptado em: ' + path.join(ENVIRONMENT.ENCRYPTED_FOLDER));
-        });
+        .pipe(gulp.dest(ENVIRONMENT.ENCRYPTED_FOLDER));
 }
 
 function decryptContent(enctryptedContent) {
@@ -120,11 +118,7 @@ function decryptFiles() {
             }
             callback(null, file);
         }))
-        .pipe(gulp.dest(ENVIRONMENT.DECRYPTED_FOLDER))
-        .end(() => {
-            yellow('Desencriptado com sucesso!');
-            yellow('Desencriptado em: ' + path.join(ENVIRONMENT.DECRYPTED_FOLDER));
-        });
+        .pipe(gulp.dest(ENVIRONMENT.DECRYPTED_FOLDER));
 }
 
 gulp.task('decrypt', decryptFiles);
