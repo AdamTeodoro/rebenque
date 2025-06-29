@@ -89,7 +89,7 @@
 
 <br />
 
-<h4>Os comandos só funcionam dentro da pasta do rebenque!</h4>
+<h3>OS COMANDOS SÓ FUNCIONAM DENTRO DA PASTA DO REBENQUE!</h3>
 
 <br />
 
