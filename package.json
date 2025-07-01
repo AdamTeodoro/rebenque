@@ -15,7 +15,9 @@
   "type": "commonjs",
   "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "encrypt": "npx gulp encrypt",
+    "decrypt": "npx gulp decrypt"
   },
   "dependencies": {
     "crypto-js": "^4.2.0",
