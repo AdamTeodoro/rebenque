@@ -30,36 +30,58 @@ function encryptContent(content) {
         .toString();
 }
 
-let backupFailStatus = null;
+async function cleanBkp() {
+    try {
+        green("Apagando pasta de backup");
+        console.log('pathToBkpFolder: ', pathToBkpFolder);
+        await del.deleteAsync([path.join(`${ENVIRONMENT.BACKUP_FOLDER}`, '/**/*')])
+            .then(() => green("Pasta de backup apagada com sucesso"))
+            .catch((error) => red("Falha ao apagar pasta de backup \n error: ", error));
+    } catch(error) {
+        red("Falha ao apagar pasta de backup \n error: ", error)
+    }
+}
 
+let backupFailStatus = null;
 function backupFiles() {
     try {
         green('Iniciando backup dos arquivos encriptados . . .')
+        const folderDistFromNewBackup = path.join(`${ENVIRONMENT.BACKUP_FOLDER}`, Date.now().toString()).replaceAll('\\', '/');
+        console.log('folderDistFromNewBackup: ', folderDistFromNewBackup);
         if (ENVIRONMENT.ACTIVE_BACKUP_FILES_BACKUP) {
             return gulp.src(`${ENVIRONMENT.ENCRYPTED_FOLDER}/**/*.*`)
-                .pipe(gulp.dest(ENVIRONMENT.BACKUP_FOLDER))
+                .pipe(gulp.dest(folderDistFromNewBackup));
         } else {
             yellow("Backup de arquivos encriptados não está ativo!!")
         }
     } catch(error) {
         red('Falha no backup de arquivos!');
-        backupFail = 'error: ' + error;
+        backupFailStatus = 'error: ' + error;
     }
 }
 
 async function deleteOldEncryptedFiles() {
-    if (backupFailStatus == null) {
-        green('Finalizado backup dos arquivos!');
-        green("Apagando antigos arquivos encriptados . . .");
-        await del.deleteAsync([`${ENVIRONMENT.ENCRYPTED_FOLDER}/**/*`])
-            .then(() => green('Arquivos apagados com sucesso !'))
-            .catch((error) => {
-                red('Falha ao apagar arquivos encryptados');
-                red('error: ', error);
-            });
-        return;
+    try {
+        if (backupFailStatus == null) {
+            green('Finalizado backup dos arquivos!');
+            green("Apagando antigos arquivos encriptados . . .");
+            const pathToOldEncryptedFiles = path.join(`${ENVIRONMENT.ENCRYPTED_FOLDER}`, '/**/*');
+            //Cuidado, os leitões barrigudos comedores de hamburguer últra processado, esqueceram de retornar erro quando o path estiver voltando e a 
+            // barra virada para a direita Ex: ../../sopa/sopademorango/
+            //O path.join -> retorna um path virado para o lado esquerdo no windows e direito no linux
+            //A biblioteca del aceita tando a barra invertida, quanto a barra correta
+            await del.deleteAsync([pathToOldEncryptedFiles])
+                .then(() => green('Arquivos apagados com sucesso !'))
+                .catch((error) => {
+                    red('Falha ao apagar arquivos encryptados');
+                    red('error: ', error);
+                });
+            return;
+        }
+        red('Não foi possível apagar arquivos encriptados!')
+    } catch(error) {
+        red('error: ',  error);
     }
-    red('Não foi possível apagar arquivos encriptados!')
 }
 
 function decryptContent() {
@@ -123,6 +145,8 @@ function decryptFiles() {
         }))
         .pipe(gulp.dest(ENVIRONMENT.DECRYPTED_FOLDER));
 }
+
+gulp.task('cleanBkp', cleanBkp);
 gulp.task('backupFiles', backupFiles);
 gulp.task('deleteOldEncryptedFiles', deleteOldEncryptedFiles);
 gulp.task('encryptFiles', encryptFiles);

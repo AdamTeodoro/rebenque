@@ -5,7 +5,17 @@
 
 <h2>Começando<h2>
 
-<h1>!IMPORTANTE ADICIONE A PASTA DO REBENQUE NA SUA GIT IGNORE</h1>
+<h1>
+!IMPORTANTE ADICIONE AALGUMAS PASTAS DO REBENQUE NA GIT IGNORE DO SEU PROJETO CONFORME O EXEMPLO E ADICIONE A PASTA DE ENCRIPTAÇÃO E BKP NA LISTA DE PASTAS QUE DEVEM SER IGNORADAS, PARA QUE NÃO OCORRA A ENCRIPTAÇÃO DA ENCRIPTAÇÃO
+</h1>
+<h3></h3>
+```
+    rebenque/bkp
+    rebenque/encrypted
+    rebenque/decrypted
+    rebenque/node_modules
+    rebenque/gulp-environment.json
+```
 
 <h3>Passo 1</h3>
 <h4>Faça o clone desse repositório dessa maneira para dentro da raiz do seu projeto: </h4>
