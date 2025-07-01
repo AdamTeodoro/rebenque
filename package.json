@@ -21,6 +21,8 @@
   },
   "dependencies": {
     "crypto-js": "^4.2.0",
+    "del": "^8.0.0",
+    "gulp": "^5.0.1",
     "gulp-cli": "^3.1.0",
     "gulp-rename": "^2.1.0",
     "through2": "^4.0.2"
