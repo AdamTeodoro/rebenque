@@ -1,0 +1,12 @@
+{
+    "SECRET_KEY": "bosta",
+    "PROJECT_FOLDER_ROOT": "./testproject",
+    "ENCRYPTED_FOLDER": "encrypted",
+    "DECRYPTED_FOLDER": "decrypted",
+    "ACTIVE_BACKUP_FILES_BACKUP": true,
+    "BACKUP_FOLDER": "./bkp",
+    "FILE_NAMES_TO_IGNORE": [
+        "package-lock.json",
+        "node_modules/**/*.*"
+    ]
+}
