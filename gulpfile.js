@@ -3,10 +3,13 @@ const gulp = require('gulp');
 const rename = require('gulp-rename');
 const cryptoJs = require('crypto-js');
 const through2 = require('through2');
+const del = require('del');
+
+//environment
+const ENVIRONMENT = require('./gulp-environment.json');
 
 //node
 const path = require('path');
-const fs = require('fs');
 const { Buffer } = require('safe-buffer');
 
 function red(text) {
@@ -21,42 +24,42 @@ function yellow(text) {
     console.log(`\t\x1b[33m${text}\x1b[0m`);
 }
 
-const ENVIRONMENT = {
-    //senha para desencriptação
-    SECRET_KEY: 'bosta',
-    //caminho da raiz do projeto
-    PROJECT_FOLDER_ROOT: './test_project',
-    //caminho da pasta encriptada
-    ENCRYPTED_FOLDER: 'encrypted',
-    //caminho da pasta desencriptada
-    DECRYPTED_FOLDER: 'decrypted',
-    /**
-     * caminho para os arquivos que devem ser ignorados, esse caminho começa
-     * na raiz do projeto
-     * Ex:
-     * test_project
-     *  |
-     *  | -> raiz do projeto
-     *  |
-     *  | -> /node_modules
-     *  |    |
-     *  |     -> ...
-     *  | -> /src
-     *  |    |
-     *  |     -> index.js
-     *  |
-     *    -> package-lock.json
-     */
-    FILE_NAMES_TO_IGNORE: [
-        'package-lock.json',
-        'node_modules/**/*.*',
-    ]
-};
-
 function encryptContent(content) {
     return cryptoJs.AES
         .encrypt(content, ENVIRONMENT.SECRET_KEY)
         .toString();
+}
+
+let backupFailStatus = null;
+
+function backupFiles() {
+    try {
+        green('Iniciando backup dos arquivos encriptados . . .')
+        if (ENVIRONMENT.ACTIVE_BACKUP_FILES_BACKUP) {
+            return gulp.src(`${ENVIRONMENT.ENCRYPTED_FOLDER}/**/*.*`)
+                .pipe(gulp.dest(ENVIRONMENT.BACKUP_FOLDER))
+        } else {
+            yellow("Backup de arquivos encriptados não está ativo!!")
+        }
+    } catch(error) {
+        red('Falha no backup de arquivos!');
+        backupFail = 'error: ' + error;
+    }
+}
+
+async function deleteOldEncryptedFiles() {
+    if (backupFailStatus == null) {
+        green('Finalizado backup dos arquivos!');
+        green("Apagando antigos arquivos encriptados . . .");
+        await del.deleteAsync([`${ENVIRONMENT.ENCRYPTED_FOLDER}/**/*`])
+            .then(() => green('Arquivos apagados com sucesso !'))
+            .catch((error) => {
+                red('Falha ao apagar arquivos encryptados');
+                red('error: ', error);
+            });
+        return;
+    }
+    red('Não foi possível apagar arquivos encriptados!')
 }
 
 function decryptContent() {
@@ -77,7 +80,7 @@ function encryptFiles() {
     //obtendo o caminho raíz e somando
     // invertendo a barra de \ para /, duas barras '\\' para representar apenas uma barra '\'
     const fullPathsToIgnore = ENVIRONMENT.FILE_NAMES_TO_IGNORE
-        .map((pathToFile) => path.join(ENVIRONMENT.PROJECT_FOLDER_ROOT, pathToFile).replaceAll("\\", "/"))
+        .map((pathToFile) => path.join(ENVIRONMENT.PROJECT_FOLDER_ROOT, pathToFile).replaceAll("\\", "/"));
     //encriptando os arquivos da lista
     return gulp.src(`${ENVIRONMENT.PROJECT_FOLDER_ROOT}/**/*.*`, { ignore: fullPathsToIgnore })
         .pipe(through2.obj((file, enc, callback) => {
@@ -120,9 +123,8 @@ function decryptFiles() {
         }))
         .pipe(gulp.dest(ENVIRONMENT.DECRYPTED_FOLDER));
 }
-
+gulp.task('backupFiles', backupFiles);
+gulp.task('deleteOldEncryptedFiles', deleteOldEncryptedFiles);
+gulp.task('encryptFiles', encryptFiles);
 gulp.task('decrypt', decryptFiles);
-gulp.task('encrypt', encryptFiles);
-
-// chamar uma lista de tarefas em apenas 1 comando
-// gulp.task('encrypt', gulp.series('encryptSRCFiles', 'encryptFilesByNames'));
+gulp.task('encrypt', gulp.series('backupFiles', 'deleteOldEncryptedFiles', 'encryptFiles'));
