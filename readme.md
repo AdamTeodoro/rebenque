@@ -5,6 +5,8 @@
 
 <h2>Começando<h2>
 
+<h1>!IMPORTANTE ADICIONE A PASTA DO REBENQUE NA SUA GIT IGNORE</h1>
+
 <h3>Passo 1</h3>
 <h4>Faça o clone desse repositório dessa maneira para dentro da raiz do seu projeto: </h4>
 
@@ -13,11 +15,11 @@
 ```
 
 <h3>Passo 2</h3>
-<h4>Configure no arquivo 'gulpfile.js', adicione o caminho para a pasta RAIZ do seu projeto, com o seu código fonte: </h4>
+<h4>Configure no arquivo 'gulp-environment.json', adicione o caminho para a pasta RAIZ do seu projeto, com o seu código fonte: </h4>
 
 ```
     //padrão
-    const ENVIRONMENT = {
+    {
         PROJECT_FOLDER_ROOT: '../',
     }
 ```
@@ -26,7 +28,7 @@
 <h4>Configure arquivos que não devem ser encriptados, que devem ser ignorados, o caminho para os arquivos ignorados devem começar a partir da raiz do projeto, como por exemplo:</h4>
 
 ```
-    const ENVIRONMENT = {
+    {
         . . .
         FILE_NAMES_TO_IGNORE: [
             'package-lock.json',
@@ -42,7 +44,7 @@
 </h4>
 
 ```
-    const ENVIRONMENT = {
+    {
         . . .
         ENCRYPTED_FOLDER: './caminho-para-onde-o-codigo-encriptado-deve-ser-escrito'
     }
@@ -55,10 +57,10 @@
 </h4>
 
 ```
-    const ENVIRONMENT = {
+    {
         . . .
         DECRYPTED_FOLDER: './caminho-para-onde-o-codigo-desencriptado-deve-ser-escrito'
-    };
+    }
 
 ```
 
@@ -68,10 +70,10 @@
 </h4>
 
 ```
-    const ENVIRONMENT = {
+    {
         . . .
         SECRET_KEY: 'SUA SENHA SEGURA'
-    };
+    }
 
 ```
 
@@ -108,10 +110,27 @@
 <h3>Passo 10</h3>
 <h4>Você pode fazer commits para o repositório remoto na pasta 'ENCRYPTED_FOLDER', enviando para o git um código versionado e encriptado</h4>
 
-<h1>DICA</h1>
+<h1>DICAS</h1>
+
 <h2>Crie um repositório apenas LOCALMENTE na raiz do projeto, para continuar usando as funcionalidades da IDE relacionadas ao git, funcionalidades como:</h2>
 
 <h4>1 - verificar mudanças em arquivos</h4>
 <h4>2 - desfazer mudanças de arquivos</h4>
 <h4>3 - controle de versão local</h4>
+
+<h2>Ao adicionar o rebenque na raiz do seu projeto é possível adicionar um comando mais simples de encryptação da seguinte maneira: </h2>
+<h3>Na package.json do seu projeto: </h3>
+
+```
+    {
+        . . .
+        "scripts": {
+            "encrypt": "cd rebenque && npm run encrypt",
+            "descrypt": "cd rebenque && npm run descrypt"
+        },
+        . . .
+    }
+```
+
+<h3>Esse comando entra na pasta rebenque e executa o comando de encryptação!</h3>
 
